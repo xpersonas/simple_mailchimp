@@ -27,12 +27,12 @@ admin/config/simple-mailchimp/config, under the Configuration menu.
 
 **Structure:**
 ```
-DRUPAL_FORM_ID|EMAIL:drupal_form_email_field|MAILCHIMP_MERGE_TAG:mailchimp_field_type:drupal_form_field
+d8_form_id|email:d8_field|MC_MERGE_TAG:mc_field_type:d8_field
 ```
 
 **Example:**
 ```
-warranty_form|EMAIL:field_email|FNAME:text:field_fname,LNAME:text:field_lname,MMERGE5:phone:field_phone
+warranty_form|email:d8_field|FNAME:text:field_fname,MMERGE5:phone:field_phone
 ```
 
 MailChimp Field Types:
@@ -60,13 +60,8 @@ MailChimp address field parts:
 * country
 
 Formatting is similar to before except now we must account for multiple address 
-parts. Separate MailChimp field and 
-form field with a dash. Separate each part of the address with two dashes.
-
-**Structure:** 
-```
-MAILCHIMP_MERGE_TAG:address:city-field_city--state-field_state--zip-field_zip
-```
+parts. Separate MailChimp field and form field with a dash. Separate each part
+of the address with two dashes.
 
 **Example:**
 ```
