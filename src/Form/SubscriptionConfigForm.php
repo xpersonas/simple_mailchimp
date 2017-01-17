@@ -31,7 +31,7 @@ class SubscriptionConfigForm extends ConfigFormBase {
     $form['subscription_api_key'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('MailChimp API Key'),
-      '#default_value' => $config->get('api_key'),
+      '#default_value' => $config->get('apiKey'),
       '#required' => TRUE,
       '#description' => $this->t('MailChimp API key information can be found at <a href="http://admin.mailchimp.com/account/api" target="_blank">http://admin.mailchimp.com/account/api</a>.'),
     );
@@ -39,7 +39,7 @@ class SubscriptionConfigForm extends ConfigFormBase {
     $form['subscription_list_id'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('MailChimp List ID'),
-      '#default_value' => $config->get('list_id'),
+      '#default_value' => $config->get('listId'),
       '#required' => TRUE,
       '#description' => $this->t('For MailChimp list IDs, login to MC account, go to List, then List Tools, and look for the List ID entry.'),
     );
@@ -69,7 +69,7 @@ class SubscriptionConfigForm extends ConfigFormBase {
     $form['subscription_enabled_forms'] = array(
       '#type' => 'textarea',
       '#title' => $this->t('Enabled Forms'),
-      '#default_value' => ($config->get('form_ids') ? implode("\r\n", $config->get('form_ids')) : ''),
+      '#default_value' => ($config->get('formIds') ? implode("\r\n", $config->get('formIds')) : ''),
       '#required' => TRUE,
     );
 
@@ -114,7 +114,7 @@ class SubscriptionConfigForm extends ConfigFormBase {
     $form['subscription_interests'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Subscription Interests'),
-      '#default_value' => $config->get('interest_group'),
+      '#default_value' => $config->get('interestGroup'),
       '#required' => FALSE,
       '#description' => $this->t('Subscription interests allow users to opt-in to pre-determined MailChimp groups. Enter the id for the interest group.'),
     );
@@ -131,12 +131,12 @@ class SubscriptionConfigForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
     $config = $this->config('simple_mailchimp.settings');
-    $config->set('api_key', $form_state->getValue('subscription_api_key'));
-    $config->set('list_id', $form_state->getValue('subscription_list_id'));
+    $config->set('apiKey', $form_state->getValue('subscription_api_key'));
+    $config->set('listId', $form_state->getValue('subscription_list_id'));
     $config->set('status', $form_state->getValue('subscription_status'));
     $config->set('text', $form_state->getValue('subscription_text'));
-    $config->set('form_ids', explode("\r\n", $form_state->getValue('subscription_enabled_forms')));
-    $config->set('interest_group', $form_state->getValue('subscription_interests'));
+    $config->set('formIds', explode("\r\n", $form_state->getValue('subscription_enabled_forms')));
+    $config->set('interestGroup', $form_state->getValue('subscription_interests'));
     $config->set('configuration', $form_state->getValue('config'));
     $config->save();
 

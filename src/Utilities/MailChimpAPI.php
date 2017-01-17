@@ -25,7 +25,7 @@ class MailChimpAPI {
     $this->client = \Drupal::httpClient();
     $this->apiKey = $config->get('apiKey');
     $this->listId = $config->get('listId');
-    $this->groupId = $config->get('interest_group');
+    $this->groupId = $config->get('interestGroup');
     $this->status = $config->get('status');
     $this->endpoint = 'https://' . substr($this->apiKey, strpos($this->apiKey, '-') + 1) . '.api.mailchimp.com/3.0';
   }
@@ -61,6 +61,8 @@ class MailChimpAPI {
       return $data;
     }
     catch (\GuzzleHttp\Exception\RequestException $e) {
+      $error_message = json_decode($e->getResponse()->getBody()->getContents());
+      drupal_set_message($error_message->detail);
       \Drupal::logger('simple_mailchimp')->notice($e);
     }
   }
@@ -102,7 +104,7 @@ class MailChimpAPI {
         'body' => json_encode($data),
       ]);
       $data = $response->getBody();
-      drupal_set_message($this->t('You have successfully subscribed. Check your inbox to confirm your subscription.'));
+      drupal_set_message('You have successfully subscribed. Check your inbox to confirm your subscription.');
 
       return TRUE;
     }

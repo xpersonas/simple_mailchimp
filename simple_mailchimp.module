@@ -96,7 +96,7 @@ function simple_mailchimp_form_alter(&$form, &$form_state, $form_id) {
       );
 
       // Check for interest group id.
-      $interest_group_id = $config->get('interest_group');
+      $interest_group_id = $config->get('interestGroup');
       if ($interest_group_id) {
         // Get all options for this interest group id.
         $subscription_interests = simple_mailchimp_get_mailchimp_group_data();
@@ -145,8 +145,8 @@ function _simple_mailchimp_form_validate_global_handler(array &$form, FormStateI
   // Load module config.
   $config = \Drupal::config('simple_mailchimp.settings');
 
-  // Check for form_ids configuration setting.
-  $form_ids = $config->get('form_ids');
+  // Check for formIds configuration setting.
+  $form_ids = $config->get('formIds');
 
   if ($form_ids) {
 
@@ -174,8 +174,8 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
     // Load module config.
     $config = \Drupal::config('simple_mailchimp.settings');
 
-    // Check for form_ids configuration setting.
-    $form_ids = $config->get('form_ids');
+    // Check for formIds configuration setting.
+    $form_ids = $config->get('formIds');
 
     if ($form_ids) {
 
@@ -283,7 +283,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
 
       // Check if an interest group id exists, and if so, loop through them.
       $interests = NULL;
-      if ($config->get('interest_group')) {
+      if ($config->get('interestGroup')) {
         $subscription_interests = $form_state->getValue('subscription_interests');
         foreach ($subscription_interests as $key => $value) {
           if ($value) {
@@ -315,7 +315,7 @@ function simple_mailchimp_configuration_cleaner() {
   $result = array();
 
   $config = \Drupal::config('simple_mailchimp.settings');
-  $config_forms = $config->get('form_ids');
+  $config_forms = $config->get('formIds');
 
   if ($config_forms) {
     foreach ($config_forms as $value) {
