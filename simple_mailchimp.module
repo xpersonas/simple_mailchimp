@@ -53,10 +53,10 @@ function mailchimp_integration_get_mailchimp_group_data() {
   $mailchimp = new \Drupal\simple_mailchimp\Utilities\MailChimpAPI();
 
   // get interest-category title
-  $group_title = $mailchimp->request('group_title'); // $group_title['title']
+  $group_title = $mailchimp->request('group_title');
 
   // get interest-category options
-  $group_data = $mailchimp->request('group_data'); // $group_data['interests']
+  $group_data = $mailchimp->request('group_data');
 
   $interest_category_title = $group_title['title'];
   $interest_group[$interest_category_title] = $group_data['interests'];
@@ -85,7 +85,9 @@ function simple_mailchimp_form_alter(&$form, &$form_state, $form_id) {
 
     // convert form id array into single line for matchPath()
     $form_ids_single_line = implode("\n", $form_ids);
-    $form['submit']['#weight'] = 1000; // trying to ensure submit button is last
+
+    // trying to ensure submit button is last
+    $form['submit']['#weight'] = 1000;
 
     // check if this form is a match, if so add subscribe and interest fields
     if (\Drupal::service('path.matcher')->matchPath($form_id, $form_ids_single_line)) {
@@ -110,7 +112,7 @@ function simple_mailchimp_form_alter(&$form, &$form_state, $form_id) {
 
         // get the options with id as value and title as label
         $options = '';
-        foreach($subscription_interests[$label] as $key => $value) {
+        foreach($subscription_interests[$label] as $value) {
           $options[$value['id']] = $value['name'];
         }
 
