@@ -5,9 +5,9 @@ subscription signup option. It is not meant in any way to be as robust as the
 standard [MailChimp module](https://www.drupal.org/project/mailchimp).
 
 This module works with:
-1. Contact forms
-2. Webforms
-3. Custom module forms
+1. Contact forms (core)
+2. Webforms (contrib)
+3. Custom module forms (custom)
 
 How to install and configure:
 
@@ -25,11 +25,15 @@ admin/config/simple-mailchimp/config, under the Configuration menu.
 
 ### Basic Format ###
 
-Structure:
+**Structure:**
+```
 DRUPAL_FORM_ID|EMAIL:drupal_form_email_field|MAILCHIMP_MERGE_TAG:mailchimp_field_type:drupal_form_field
+```
 
-Example:
+**Example:**
+```
 warranty_form|EMAIL:field_email|FNAME:text:field_fname,LNAME:text:field_lname,MMERGE5:phone:field_phone
+```
 
 MailChimp Field Types:
 * text
@@ -47,14 +51,24 @@ The MailChimp address field is not very flexible, and can only be used with US
 postal addresses. Therefore it is not recommended. However, this module can map 
 form fields to each part of the MailChimp address field.
 
-MailChimp address parts: addr1, addr2, city, state, zip, country
+MailChimp address field parts:
+* addr1
+* addr2
+* city
+* state
+* zip
+* country
 
 Formatting is similar to before except now we must account for multiple address 
 parts. Separate MailChimp field and 
 form field with a dash. Separate each part of the address with two dashes.
 
-Structure:  
+**Structure:** 
+```
 MAILCHIMP_MERGE_TAG:address:city-field_city--state-field_state--zip-field_zip
+```
 
-Example:  
-MMERGE3:address:addr1-address_thoroughfare--addr2-address_premise--city-address_locality--state-address_administrative_area--zip-address_postal_code--country-address_country
+**Example:**
+```
+MMERGE3:address:addr1-thoroughfare--addr2-premise--city-locality...
+```
