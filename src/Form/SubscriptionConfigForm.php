@@ -6,9 +6,10 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
+ * Class SubscriptionConfigForm.
+ *
  * Configure Simple MailChimp settings.
  *
- * Class SubscriptionConfigForm
  * @package Drupal\simple_mailchimp\Form
  */
 class SubscriptionConfigForm extends ConfigFormBase {
@@ -50,7 +51,7 @@ class SubscriptionConfigForm extends ConfigFormBase {
         'subscribed' => 'subscribed',
         'unsubscribed' => 'unsubscribed',
         'cleaned' => 'cleaned',
-        'pending' => 'pending'
+        'pending' => 'pending',
       ],
       '#default_value' => $config->get('status'),
       '#required' => TRUE,

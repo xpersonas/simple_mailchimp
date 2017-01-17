@@ -2,35 +2,19 @@
 
 namespace Drupal\simple_mailchimp\Utilities;
 
+/**
+ * Class MailChimpAPI.
+ *
+ * @package Drupal\simple_mailchimp\Utilities
+ */
 class MailChimpAPI {
-  /**
-   * @var \GuzzleHttp\Client
-   */
+
   private $client;
-
-  /**
-   * @var string
-   */
-  private $api_key;
-
-  /**
-   * @var string
-   */
-  private $list_id;
-
-  /**
-   * @var string
-   */
-  private $group_id;
-
-  /**
-   * @var string
-   */
+  private $apiKey;
+  private $listId;
+  private $groupId;
   private $status;
-
-  /**
-   * @var string
-   */
+  private $baseUrl;
   private $endpoint;
 
   /**
@@ -39,21 +23,26 @@ class MailChimpAPI {
   public function __construct() {
     $config = \Drupal::config('simple_mailchimp.settings');
     $this->client = \Drupal::httpClient();
-    $this->api_key = $config->get('api_key');
-    $this->list_id = $config->get('list_id');
-    $this->group_id = $config->get('interest_group');
+    $this->apiKey = $config->get('apiKey');
+    $this->listId = $config->get('listId');
+    $this->groupId = $config->get('interest_group');
     $this->status = $config->get('status');
-    $this->endpoint = 'https://' . substr($this->api_key,strpos($this->api_key,'-')+1) . '.api.mailchimp.com/3.0';
+    $this->endpoint = 'https://' . substr($this->apiKey, strpos($this->apiKey, '-') + 1) . '.api.mailchimp.com/3.0';
   }
 
   /**
    * Request information from MailChimp API.
    *
-   * This function is used to get the interest group title and options, if needed.
+   * This function is used to get the interest group title and options, if
+   * needed.
    *
-   * @param string $resource (@see getResourceUrl() - group_title, group_data, subscribe)
+   * @param string $resource
+   *   URL endpoint for MailChimp API resource.
    * @param string $method
+   *   Request method defaults to GET.
+   *
    * @return mixed|string
+   *   Return response from API if successful.
    */
   public function request($resource = '', $method = 'GET') {
 
@@ -61,13 +50,13 @@ class MailChimpAPI {
 
     try {
       $response = $this->client->$method($full_url, [
-        'auth' => ['apikey', $this->api_key],
+        'auth' => ['apikey', $this->apiKey],
         'headers' => [
           'content-type' => 'application/json',
-          'authorization' => 'Basic '.base64_encode( 'user:'.$this->api_key ),
+          'authorization' => 'Basic ' . base64_encode('user:' . $this->apiKey),
         ],
       ]);
-      $data = json_decode($response->getBody(), true);
+      $data = json_decode($response->getBody(), TRUE);
 
       return $data;
     } catch (\GuzzleHttp\Exception\RequestException $e) {
@@ -81,36 +70,42 @@ class MailChimpAPI {
    * This function is used to subscribe users.
    *
    * @param string $email
+   *   Subscriber email address.
    * @param string $merge_fields
+   *   Subscriber merge fields.
    * @param string $interests
+   *   Interest-category values.
+   *
    * @return bool
+   *   Returns true if successful.
    */
   public function subscribe($email = '', $merge_fields = '', $interests = '') {
 
     $full_url = $this->getResourceUrl('subscribe') . md5(strtolower($email));
 
     $data = array(
-      'apikey'        => $this->api_key,
+      'apikey'        => $this->apiKey,
       'email_address' => $email,
       'status'        => $this->status,
       'merge_fields'  => $merge_fields,
-      'interests'     => $interests
+      'interests'     => $interests,
     );
 
     try {
       $response = $this->client->put($full_url, [
-        'auth' => ['apikey', $this->api_key],
+        'auth' => ['apikey', $this->apiKey],
         'headers' => [
           'content-type' => 'application/json',
-          'authorization' => 'Basic '.base64_encode( 'user:'.$this->api_key ),
+          'authorization' => 'Basic ' . base64_encode('user:' . $this->apiKey),
         ],
-        'body' => json_encode($data)
+        'body' => json_encode($data),
       ]);
       $data = $response->getBody();
       drupal_set_message($this->t('You have successfully subscribed. Check your inbox to confirm your subscription.'));
 
       return TRUE;
-    } catch (\GuzzleHttp\Exception\RequestException $e) {
+    }
+    catch (\GuzzleHttp\Exception\RequestException $e) {
       $error_message = json_decode($e->getResponse()->getBody()->getContents());
       drupal_set_message($error_message->detail);
       \Drupal::logger('simple_mailchimp')->notice($error_message->detail);
@@ -122,24 +117,27 @@ class MailChimpAPI {
   /**
    * Get the appropriate address for MailChimp API endpoint.
    *
-   * @param $resource
    * @return string
+   *   Returns the proper URL endpoint for MailChimp API resource.
    */
   public function getResourceUrl($resource) {
     switch ($resource) {
       case 'group_title':
-        $this->base_url = '/lists/' . $this->list_id . '/interest-categories/' . $this->group_id;
+        $this->baseUrl = '/lists/' . $this->listId . '/interest-categories/' . $this->groupId;
         break;
-      case 'group_data':
-        $this->base_url = '/lists/' . $this->list_id . '/interest-categories/' . $this->group_id . '/interests';
-        break;
-      case 'subscribe':
-        $this->base_url = '/lists/' . $this->list_id . '/members/';
-        break;
-    }
-    $base_url = $this->endpoint . $this->base_url;
 
-    return $base_url;
+      case 'group_data':
+        $this->baseUrl = '/lists/' . $this->listId . '/interest-categories/' . $this->groupId . '/interests';
+        break;
+
+      case 'subscribe':
+        $this->baseUrl = '/lists/' . $this->listId . '/members/';
+        break;
+
+    }
+    $baseUrl = $this->endpoint . $this->baseUrl;
+
+    return $baseUrl;
   }
 
 }
