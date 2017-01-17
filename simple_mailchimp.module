@@ -8,7 +8,9 @@
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\UrlHelper;
-use \Drupal\simple_mailchimp\Utilities\MailChimpAPI;
+use Drupal\simple_mailchimp\Utilities\MailChimpAPI;
+use Drupal\simple_mailchimp\Utilities\ValidateDate;
+use Drupal\simple_mailchimp\Utilities\ValidateZipcode;
 
 /**
  * Implements hook_help().
@@ -214,7 +216,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
               break;
 
             case 'zip_code':
-              $validator = new \Drupal\simple_mailchimp\Utilities\ValidateZipcode();
+              $validator = new ValidateZipcode();
               $field_final = $validator->validate($field_value);
 
               if (pc_validate_zipcode($field_value)) {
@@ -263,7 +265,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
               break;
 
             case 'birthday':
-              $validator = new \Drupal\simple_mailchimp\Utilities\ValidateDate();
+              $validator = new ValidateDate();
               $field_final = $validator->validate($field_value);
               break;
 
