@@ -48,7 +48,7 @@ function simple_mailchimp_theme($existing, $type, $theme, $path) {
  *
  * @return mixed
  */
-function mailchimp_integration_get_mailchimp_group_data() {
+function simple_mailchimp_get_mailchimp_group_data() {
 
   $mailchimp = new \Drupal\simple_mailchimp\Utilities\MailChimpAPI();
 
@@ -105,7 +105,7 @@ function simple_mailchimp_form_alter(&$form, &$form_state, $form_id) {
       $interest_group_id = $config->get('interest_group');
       if($interest_group_id) {
         // get all options for this interest group id
-        $subscription_interests = mailchimp_integration_get_mailchimp_group_data();
+        $subscription_interests = simple_mailchimp_get_mailchimp_group_data();
 
         // get the title of this interest group
         $label = current(array_keys($subscription_interests));
@@ -154,7 +154,9 @@ function _simple_mailchimp_form_validate_global_handler(array &$form, FormStateI
   $config = \Drupal::config('simple_mailchimp.settings');
 
   // check for form_ids configuration setting
-  if ($form_ids = $config->get('form_ids')) {
+  $form_ids = $config->get('form_ids');
+
+  if ($form_ids) {
 
     // clean settings into multi-dimensional array
     $form_variables = simple_mailchimp_configuration_cleaner();
@@ -184,7 +186,9 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
     $config = \Drupal::config('simple_mailchimp.settings');
 
     // check for form_ids configuration setting
-    if ($form_ids = $config->get('form_ids')) {
+    $form_ids = $config->get('form_ids');
+
+    if ($form_ids) {
 
       // clean settings into multi-dimensional array
       $form_variables = simple_mailchimp_configuration_cleaner();
@@ -209,7 +213,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
           $field_type = $merge_fields_explode[1];
 
           // mailchimp has various field types which are noted in our settings
-          // we do our best to generically accomodate as many field types as we can
+          // we do our best to generically accommodate as many field types as we can
           // phone is notoriously difficult and will only be accepted in 555-555-5555 format
           // we do not advise using a native form field on MailChimp
           switch ($field_type) {
@@ -291,7 +295,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
 
       // send to api subscribe function
       $mailchimp = new \Drupal\simple_mailchimp\Utilities\MailChimpAPI();
-      $subscribe = $mailchimp->subscribe($email, $merge_fields, $interests);
+      $mailchimp->subscribe($email, $merge_fields, $interests);
     }
   }
 }
@@ -312,7 +316,7 @@ function simple_mailchimp_configuration_cleaner() {
   $config_forms = $config->get('form_ids');
 
   if($config_forms) {
-    foreach($config_forms as $key => $value) {
+    foreach($config_forms as $value) {
       $split_value = explode('|', $value);
       $form_id = $split_value[0];
       $email_id = substr($split_value[1], strpos($split_value[1], ":") + 1);

@@ -107,7 +107,7 @@ class MailChimpAPI {
         'body' => json_encode($data)
       ]);
       $data = $response->getBody();
-      drupal_set_message('You have successfully subscribed. Check your inbox to confirm your subscription.');
+      drupal_set_message($this->t('You have successfully subscribed. Check your inbox to confirm your subscription.'));
 
       return TRUE;
     } catch (\GuzzleHttp\Exception\RequestException $e) {

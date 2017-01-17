@@ -72,11 +72,11 @@ class SubscriptionConfigForm extends ConfigFormBase {
 
     $form['instructions'] = array(
       '#type' => 'details',
-      '#title' => t('Enabled Forms Field Guideline'),
-      '#description' => t('
+      '#title' => $this->t('Enabled Forms Field Guideline'),
+      '#description' => $this->t('
         <p>
           Each form should be on a separate line.<br/>
-          Seperate sections by a pipe.<br/>
+          Separate sections by a pipe.<br/>
           Separate properties with a colon.
         </p>
         <hr/>
