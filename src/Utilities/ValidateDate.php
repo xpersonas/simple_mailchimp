@@ -12,8 +12,8 @@ class ValidateDate {
   /**
    * Try converting date value into a date format.
    *
-   * @param $field_value
    * @return string
+   *   Returns passed value if validated, otherwise returns an empty string.
    */
   public function validate($field_value) {
     try {
