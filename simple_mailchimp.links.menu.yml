@@ -1,0 +1,5 @@
+simple_mailchimp.action_method_name:
+  title: 'Simple MailChimp settings'
+  description: 'Configure settings for simple MailChimp integration.'
+  parent: system.admin_config_system
+  route_name: 'simple_mailchimp.config'
