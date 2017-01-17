@@ -8,6 +8,7 @@
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\UrlHelper;
+use \Drupal\simple_mailchimp\Utilities\MailChimpAPI;
 
 /**
  * Implements hook_help().
@@ -45,7 +46,7 @@ function simple_mailchimp_theme() {
  */
 function simple_mailchimp_get_mailchimp_group_data() {
 
-  $mailchimp = new \Drupal\simple_mailchimp\Utilities\MailChimpAPI();
+  $mailchimp = new MailChimpAPI();
 
   // Get interest-category title.
   $group_title = $mailchimp->request('group_title');
@@ -96,7 +97,7 @@ function simple_mailchimp_form_alter(&$form, &$form_state, $form_id) {
       );
 
       // Check for interest group id.
-      $interest_group_id = $config->get('interestGroup');
+      $interest_group_id = $config->get('interest_group');
       if ($interest_group_id) {
         // Get all options for this interest group id.
         $subscription_interests = simple_mailchimp_get_mailchimp_group_data();
@@ -174,7 +175,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
     // Load module config.
     $config = \Drupal::config('simple_mailchimp.settings');
 
-    // Check for formIds configuration setting.
+    // Check for form configuration setting.
     $form_ids = $config->get('formIds');
 
     if ($form_ids) {
@@ -283,7 +284,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
 
       // Check if an interest group id exists, and if so, loop through them.
       $interests = NULL;
-      if ($config->get('interestGroup')) {
+      if ($config->get('interest_group')) {
         $subscription_interests = $form_state->getValue('subscription_interests');
         foreach ($subscription_interests as $key => $value) {
           if ($value) {
@@ -296,7 +297,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
       }
 
       // Send to api subscribe function.
-      $mailchimp = new \Drupal\simple_mailchimp\Utilities\MailChimpAPI();
+      $mailchimp = new MailChimpAPI();
       $mailchimp->subscribe($email, $merge_fields, $interests);
     }
   }
@@ -315,7 +316,7 @@ function simple_mailchimp_configuration_cleaner() {
   $result = array();
 
   $config = \Drupal::config('simple_mailchimp.settings');
-  $config_forms = $config->get('formIds');
+  $config_forms = $config->get('form_ids');
 
   if ($config_forms) {
     foreach ($config_forms as $value) {

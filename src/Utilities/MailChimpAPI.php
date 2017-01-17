@@ -2,6 +2,8 @@
 
 namespace Drupal\simple_mailchimp\Utilities;
 
+use \GuzzleHttp\Exception\RequestException;
+
 /**
  * Class MailChimpAPI.
  *
@@ -60,7 +62,7 @@ class MailChimpAPI {
 
       return $data;
     }
-    catch (\GuzzleHttp\Exception\RequestException $e) {
+    catch (RequestException $e) {
       $error_message = json_decode($e->getResponse()->getBody()->getContents());
       drupal_set_message($error_message->detail);
       \Drupal::logger('simple_mailchimp')->notice($e);
@@ -104,11 +106,11 @@ class MailChimpAPI {
         'body' => json_encode($data),
       ]);
       $data = $response->getBody();
-      drupal_set_message('You have successfully subscribed. Check your inbox to confirm your subscription.');
+      drupal_set_message(t('You have successfully subscribed. Check your inbox to confirm your subscription.'));
 
       return TRUE;
     }
-    catch (\GuzzleHttp\Exception\RequestException $e) {
+    catch (RequestException $e) {
       $error_message = json_decode($e->getResponse()->getBody()->getContents());
       drupal_set_message($error_message->detail);
       \Drupal::logger('simple_mailchimp')->notice($error_message->detail);
