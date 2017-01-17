@@ -157,7 +157,7 @@ function _simple_mailchimp_form_validate_global_handler(array &$form, FormStateI
     $email_var = $form_variables[$form_id]['email_id'];
     $email = $form_state->getValue($email_var);
 
-    if(!valid_email_address($email)) {
+    if (!valid_email_address($email)) {
       $form_state->setErrorByName($email, t('Please enter a valid email address.'));
     }
   }
