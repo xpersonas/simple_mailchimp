@@ -46,8 +46,8 @@ MailChimp address parts: addr1, addr2, city, state, zip, country
 
 Formatting is similar to before except now we must account for multiple address parts. Separate MailChimp field and form field with a dash. Separate each part of the address with two dashes.
 
-Structure:
+Structure:  
 MAILCHIMP_MERGE_TAG:address:city-field_city--state-field_state--zip-field_zip
 
-Example:
+Example:  
 MMERGE3:address:addr1-address_thoroughfare--addr2-address_premise--city-address_locality--state-address_administrative_area--zip-address_postal_code--country-address_country
