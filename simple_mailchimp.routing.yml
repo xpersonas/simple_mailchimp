@@ -5,4 +5,3 @@ simple_mailchimp.config:
     _title: 'Simple MailChimp Configuration'
   requirements:
     _permission: 'administer site configuration'
-

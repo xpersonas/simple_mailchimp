@@ -9,12 +9,19 @@ namespace Drupal\simple_mailchimp\Utilities;
  */
 class ValidateZipCode {
 
+  /**
+   * Validate value is a five digit numeric zip value.
+   *
+   * @param $zipcode
+   * @return string
+   */
   public function validate($zipcode) {
-    if(preg_match('/^[0-9]{5}?$/', $zipcode)) {
+    if (preg_match('/^[0-9]{5}?$/', $zipcode)) {
       $field_final = $zipcode;
     } else {
       $field_final = '';
     }
     return $field_final;
   }
+
 }
