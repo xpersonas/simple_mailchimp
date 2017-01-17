@@ -18,9 +18,11 @@ class ValidateZipCode {
   public function validate($zipcode) {
     if (preg_match('/^[0-9]{5}?$/', $zipcode)) {
       $field_final = $zipcode;
-    } else {
+    }
+    else {
       $field_final = '';
     }
+
     return $field_final;
   }
 
