@@ -170,7 +170,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
 
   $form_id = $form['#form_id'];
 
-  if($form_state->getValue('field_subscribe')) {
+  if ($form_state->getValue('field_subscribe')) {
     // Load module config.
     $config = \Drupal::config('simple_mailchimp.settings');
 
@@ -216,13 +216,13 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
               $validator = new \Drupal\simple_mailchimp\Utilities\ValidateZipcode();
               $field_final = $validator->validate($field_value);
 
-              if(pc_validate_zipcode($field_value)) {
+              if (pc_validate_zipcode($field_value)) {
                 $field_final = $field_value;
               }
               break;
 
             case 'number':
-              if(ctype_digit($field_value)) {
+              if (ctype_digit($field_value)) {
                 $field_final = $field_value;
               }
               break;
@@ -230,7 +230,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
             case 'address':
               $form_address_parts = explode('--', $field_name);
 
-              foreach($form_address_parts as $key => $value) {
+              foreach ($form_address_parts as $key => $value) {
                 $parts = explode('-', $value);
                 $field_key = $parts[0];
                 $field_id = $parts[1];
@@ -243,18 +243,20 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
 
             case 'date':
               try {
-                $dt = new DateTime( trim($field_value) );
+                $dt = new DateTime(trim($field_value));
                 $date = $dt->format('m/d');
                 $field_final = $date;
-              } catch( Exception $e ) {
+              }
+              catch (Exception $e) {
                 $field_final = '';
               }
               break;
 
             case 'phone':
-              if(preg_match('/^([0-9]{3})[-]?([0-9]{3})[-]?([0-9]{4})/', $field_value)) {
+              if (preg_match('/^([0-9]{3})[-]?([0-9]{3})[-]?([0-9]{4})/', $field_value)) {
                 $field_final = $field_value;
-              } else {
+              }
+              else {
                 $field_final = '';
               }
               break;
@@ -265,7 +267,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
               break;
 
             case 'website':
-              if(UrlHelper::isValid($field_value, TRUE)) {
+              if (UrlHelper::isValid($field_value, TRUE)) {
                 $field_final = $field_value;
               }
               break;

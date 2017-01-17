@@ -59,7 +59,8 @@ class MailChimpAPI {
       $data = json_decode($response->getBody(), TRUE);
 
       return $data;
-    } catch (\GuzzleHttp\Exception\RequestException $e) {
+    }
+    catch (\GuzzleHttp\Exception\RequestException $e) {
       \Drupal::logger('simple_mailchimp')->notice($e);
     }
   }
