@@ -64,7 +64,7 @@ class MailChimpAPI {
     }
     catch (RequestException $e) {
       $error_message = json_decode($e->getResponse()->getBody()->getContents());
-      drupal_set_message($error_message->detail);
+      drupal_set_message($error_message->detail, 'error');
       \Drupal::logger('simple_mailchimp')->notice($e);
     }
   }
@@ -112,7 +112,7 @@ class MailChimpAPI {
     }
     catch (RequestException $e) {
       $error_message = json_decode($e->getResponse()->getBody()->getContents());
-      drupal_set_message($error_message->detail);
+      drupal_set_message($error_message->detail, 'error');
       \Drupal::logger('simple_mailchimp')->notice($error_message->detail);
 
       return FALSE;

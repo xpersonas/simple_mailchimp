@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains simple_mailchimp.module..
- */
-
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\UrlHelper;
@@ -21,7 +16,7 @@ function simple_mailchimp_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.simple_mailchimp':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Proivdes MailChimp API integration with site forms. Configurable to attach subscription fields to any existing form. Also creates a single, stand alone subscription form.') . '</p>';
+      $output .= '<p>' . t('Provides MailChimp API integration with site forms. Configurable to attach subscription fields to any existing form. Also creates a single, stand alone subscription form.') . '</p>';
       return $output;
 
     default:
@@ -160,7 +155,7 @@ function _simple_mailchimp_form_validate_global_handler(array &$form, FormStateI
     $email_var = $form_variables[$form_id]['email_id'];
     $email = $form_state->getValue($email_var);
 
-    if (!valid_email_address($email)) {
+    if(!\Drupal::service('email.validator')->isValid($email)) {
       $form_state->setErrorByName($email, t('Please enter a valid email address.'));
     }
   }
