@@ -1,0 +1,12 @@
+{
+  "name": "drupal/simple_mailchimp",
+  "description": "Simple Mailchimp module for adding subscription options to existing forms.",
+  "type": "drupal-module",
+  "source": {
+    "url": "https://git.drupal.org/sandbox/xpersonas/2844285.git",
+    "type": "git",
+    "reference": "refs/heads/8.x-1.x"
+  },
+  "license": "GPL-2.0+",
+  "require": { }
+}
