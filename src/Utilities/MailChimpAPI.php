@@ -93,8 +93,11 @@ class MailChimpAPI {
       'email_address' => $email,
       'status'        => $this->status,
       'merge_fields'  => $merge_fields,
-      'interests'     => $interests,
     );
+
+    if ($interests) {
+      array_push($data, $interests);
+    }
 
     try {
       $response = $this->client->put($full_url, [
@@ -106,6 +109,7 @@ class MailChimpAPI {
         'body' => json_encode($data),
       ]);
       $data = $response->getBody();
+      $x = json_decode($data->getContents());
       drupal_set_message(t('You have successfully subscribed. Check your inbox to confirm your subscription.'));
 
       return TRUE;
