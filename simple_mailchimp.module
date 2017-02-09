@@ -324,7 +324,7 @@ function simple_mailchimp_configuration_cleaner() {
     foreach ($config_forms as $value) {
       $split_value = explode('|', $value);
       $form_id = $split_value[0];
-      if (count($form_id) > 1) {
+      if (count($split_value) > 1) {
         $email_id = substr($split_value[1], strpos($split_value[1], ":") + 1);
 
         $result[$form_id]['email_id'] = $email_id;
