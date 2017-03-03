@@ -62,7 +62,6 @@ class SubscriptionConfigForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Subscription Text'),
       '#default_value' => $config->get('text'),
-      '#required' => TRUE,
       '#description' => $this->t('Subscribe text will be the text placed with the subscribe checkbox.'),
     );
 

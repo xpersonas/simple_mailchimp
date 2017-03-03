@@ -92,8 +92,11 @@ class MailChimpAPI {
       'apikey'        => $this->apiKey,
       'email_address' => $email,
       'status'        => $this->status,
-      'merge_fields'  => $merge_fields,
     );
+
+    if ($merge_fields) {
+      $data['merge_fields'] = $merge_fields;
+    }
 
     if ($interests) {
       array_push($data, $interests);
