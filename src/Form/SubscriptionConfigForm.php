@@ -28,23 +28,23 @@ class SubscriptionConfigForm extends ConfigFormBase {
     $form = parent::buildForm($form, $form_state);
     $config = $this->config('simple_mailchimp.settings');
 
-    $form['subscription_api_key'] = array(
+    $form['subscription_api_key'] = [
       '#type' => 'textfield',
       '#title' => $this->t('MailChimp API Key'),
       '#default_value' => $config->get('apiKey'),
       '#required' => TRUE,
       '#description' => $this->t('MailChimp API key information can be found at <a href="http://admin.mailchimp.com/account/api" target="_blank">http://admin.mailchimp.com/account/api</a>.'),
-    );
+    ];
 
-    $form['subscription_list_id'] = array(
+    $form['subscription_list_id'] = [
       '#type' => 'textfield',
       '#title' => $this->t('MailChimp List ID'),
       '#default_value' => $config->get('listId'),
       '#required' => TRUE,
       '#description' => $this->t('For MailChimp list IDs, login to MC account, go to List, then List Tools, and look for the List ID entry.'),
-    );
+    ];
 
-    $form['subscription_status'] = array(
+    $form['subscription_status'] = [
       '#type' => 'select',
       '#title' => $this->t('Subscriber Status'),
       '#options' => [
@@ -56,23 +56,23 @@ class SubscriptionConfigForm extends ConfigFormBase {
       '#default_value' => $config->get('status'),
       '#required' => TRUE,
       '#description' => $this->t('Set the default status for users as they subscribe. Generally this will be left as <em>pending</em>.'),
-    );
+    ];
 
-    $form['subscription_text'] = array(
+    $form['subscription_text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Subscription Text'),
       '#default_value' => $config->get('text'),
       '#description' => $this->t('Subscribe text will be the text placed with the subscribe checkbox.'),
-    );
+    ];
 
-    $form['subscription_enabled_forms'] = array(
+    $form['subscription_enabled_forms'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Enabled Forms'),
       '#default_value' => ($config->get('formIds') ? implode("\r\n", $config->get('formIds')) : ''),
       '#required' => TRUE,
-    );
+    ];
 
-    $form['instructions'] = array(
+    $form['instructions'] = [
       '#type' => 'details',
       '#title' => $this->t('Enabled Forms Field Guideline'),
       '#description' => $this->t('
@@ -108,15 +108,15 @@ class SubscriptionConfigForm extends ConfigFormBase {
         <p><em>MMERGE3:address:addr1-address_thoroughfare--addr2-address_premise--city-address_locality--state-address_administrative_area--zip-address_postal_code--country-address_country</em></p>
       '),
       '#open' => FALSE,
-    );
+    ];
 
-    $form['subscription_interests'] = array(
+    $form['subscription_interests'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Subscription Interests'),
       '#default_value' => $config->get('interestGroup'),
       '#required' => FALSE,
       '#description' => $this->t('Subscription interests allow users to opt-in to pre-determined MailChimp groups. Enter the id for the interest group.'),
-    );
+    ];
 
     return $form;
 

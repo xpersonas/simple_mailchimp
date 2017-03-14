@@ -33,11 +33,11 @@ function simple_mailchimp_help($route_name, RouteMatchInterface $route_match) {
  */
 function simple_mailchimp_theme() {
 
-  return array(
-    'test_twig' => array(
-      'variables' => array('output' => NULL),
-    ),
-  );
+  return [
+    'test_twig' => [
+      'variables' => ['output' => NULL],
+    ],
+  ];
 }
 
 /**
@@ -88,7 +88,7 @@ function simple_mailchimp_form_alter(&$form, &$form_state, $form_id) {
 
     // Check if this form is a match, if so add subscribe and interest fields.
     if (\Drupal::service('path.matcher')->matchPath($form_id, $form_ids_single_line)) {
-      $form['field_subscribe'] = array(
+      $form['field_subscribe'] = [
         '#type' => 'checkbox',
         '#title' => $config->get('text'),
         '#required' => FALSE,
@@ -96,7 +96,7 @@ function simple_mailchimp_form_alter(&$form, &$form_state, $form_id) {
         '#suffix' => '',
         '#weigth' => 998,
         '#default_value' => 1,
-      );
+      ];
 
       // Check for interest group id.
       $interest_group_id = $config->get('interestGroup');
@@ -114,12 +114,12 @@ function simple_mailchimp_form_alter(&$form, &$form_state, $form_id) {
         }
 
         // Add interest field to form.
-        $form['subscription_interests'] = array(
+        $form['subscription_interests'] = [
           '#type' => 'checkboxes',
           '#title' => $label,
           '#options' => $options,
           '#weigth' => 999,
-        );
+        ];
       }
 
       // Add custom validation and submit handlers.
@@ -315,7 +315,7 @@ function _simple_mailchimp_form_submit_global_handler(&$form, &$form_state) {
  */
 function simple_mailchimp_configuration_cleaner() {
 
-  $result = array();
+  $result = [];
 
   $config = \Drupal::config('simple_mailchimp.settings');
   $config_forms = $config->get('formIds');

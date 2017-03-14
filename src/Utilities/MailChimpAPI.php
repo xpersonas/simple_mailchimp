@@ -2,7 +2,7 @@
 
 namespace Drupal\simple_mailchimp\Utilities;
 
-use \GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\RequestException;
 
 /**
  * Class MailChimpAPI.
@@ -88,11 +88,11 @@ class MailChimpAPI {
 
     $full_url = $this->getResourceUrl('subscribe') . md5(strtolower($email));
 
-    $data = array(
+    $data = [
       'apikey'        => $this->apiKey,
       'email_address' => $email,
       'status'        => $this->status,
-    );
+    ];
 
     if ($merge_fields) {
       $data['merge_fields'] = $merge_fields;
@@ -111,10 +111,8 @@ class MailChimpAPI {
         ],
         'body' => json_encode($data),
       ]);
-      $data = $response->getBody();
-      $x = json_decode($data->getContents());
-      drupal_set_message(t('You have successfully subscribed. Check your inbox to confirm your subscription.'));
 
+      drupal_set_message(t('You have successfully subscribed. Check your inbox to confirm your subscription.'));
       return TRUE;
     }
     catch (RequestException $e) {
