@@ -103,7 +103,7 @@ class MailChimpAPI {
     }
 
     try {
-      $response = $this->client->put($full_url, [
+      $this->client->put($full_url, [
         'auth' => ['apikey', $this->apiKey],
         'headers' => [
           'content-type' => 'application/json',
