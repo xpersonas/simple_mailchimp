@@ -99,7 +99,7 @@ class MailChimpAPI {
     }
 
     if ($interests) {
-      array_push($data, $interests);
+      $data['interests'] = $interests;
     }
 
     try {
