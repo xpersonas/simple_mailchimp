@@ -1,4 +1,4 @@
-simple_mailchimp.config:
+simple_mailchimp.settings:
   path: '/admin/config/simple-mailchimp/config'
   defaults:
     _form: '\Drupal\simple_mailchimp\Form\SubscriptionConfigForm'

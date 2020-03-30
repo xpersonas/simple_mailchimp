@@ -1,0 +1,5 @@
+simple_mailchimp.settings:
+  route_name: simple_mailchimp.settings
+  title: Settings
+  base_route: simple_mailchimp.settings
+
