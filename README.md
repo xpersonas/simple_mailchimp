@@ -9,7 +9,11 @@ This module works with:
 2. Webforms (contrib)
 3. Custom module forms (custom)
 
-How to install and configure:
+## Installation ##
+Module page: https://www.drupal.org/project/simple_mailchimp
+```
+composer require drupal/simple_mailchimp
+```
 
 1. Install "Simple MailChimp" from the module list page.
 2. Configure Simple MailChimp on your site at 
