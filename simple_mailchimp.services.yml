@@ -1,0 +1,9 @@
+services:
+  simple_mailchimp.loggerFactory:
+    class: Drupal\Core\Logger\LoggerChannelFactory
+  simple_mailchimp.messenger:
+    class: Drupal\Core\Messenger\MessengerInterface
+  simple_mailchimp.client:
+    class: GuzzleHttp\ClientInterface
+  simple_mailchimp.config:
+    class: Drupal\Core\Config\ConfigFactoryInterface

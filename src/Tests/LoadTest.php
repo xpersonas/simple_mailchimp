@@ -3,14 +3,14 @@
 namespace Drupal\simple_mailchimp\Tests;
 
 use Drupal\Core\Url;
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Simple test to ensure that main page loads with module enabled.
  *
  * @group simple_mailchimp
  */
-class LoadTest extends WebTestBase {
+class LoadTest extends BrowserTestBase {
 
   /**
    * Modules to enable.
@@ -29,7 +29,7 @@ class LoadTest extends WebTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->user = $this->drupalCreateUser(['administer site configuration']);
     $this->drupalLogin($this->user);

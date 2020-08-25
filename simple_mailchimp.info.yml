@@ -1,5 +1,5 @@
 name: Simple Mailchimp
 type: module
 description: Provides MailChimp API integration with site forms. Configurable to attach subscription fields to any existing form by form_id.
-core: 8.x
+core_version_requirement: ^8 || ^9
 package: MailChimp
